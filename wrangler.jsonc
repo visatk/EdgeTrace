@@ -17,8 +17,8 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "shop-cache",
-			"database_id": "ca0563a4-8e2e-4fb9-b55d-f1a8e229490e"
+			"database_name": "super-robot",
+			"database_id": "7feb13df-0e67-4e91-94b1-e888bf052d05"
 		}
 	]
 }
