@@ -1,0 +1,70 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "recon",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-06-02",
+	"compatibility_flags": [
+    "nodejs_compat"
+  ],
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 0.1
+	},
+	"upload_source_maps": true,
+	"placement": {
+		"mode": "smart"
+	},
+	"vars": {
+		"SANDBOX_TRANSPORT": "rpc"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "shop-cache",
+			"database_id": "ca0563a4-8e2e-4fb9-b55d-f1a8e229490e"
+		}
+	],
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+			"instance_type": "lite",
+			"max_instances": 10
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1"
+		}
+	],
+	"queues": {
+    "producers": [
+      {
+        "queue": "recon-scans",
+        "binding": "SCAN_QUEUE"
+      }
+    ],
+    "consumers": [
+      {
+        "queue": "recon-scans",
+        "max_batch_size": 100,
+        "max_batch_timeout": 30
+      }
+    ]
+  },
+  "r2_buckets": [
+    {
+      "bucket_name": "pipeline",
+      "binding": "REPORTS_BUCKET"
+    }
+  ]
+}
